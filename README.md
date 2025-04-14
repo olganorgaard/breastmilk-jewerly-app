@@ -1,21 +1,21 @@
 <h1>👩‍🍼💍 Breastmilk Jewerly application</h1>
 <p>A beautiful way to turn your breastfeeding journey into timeless keepsake jewelry. Simple, personal, and full of love.</p>
 <br><h2> 🚀 Live Demo </h2>
-<p>Check it out live here: <a href="https://billsplit-app.glitch.me/">https://billsplit-app.glitch.me/</a> </p>
+<p>Check it out live here: <a href="https://luminous-banoffee-844891.netlify.app/">https://luminous-banoffee-844891.netlify.app/</a> </p>
 <br><h2> 📌 Setup Instructions </h2>
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/olganorgaard/split-bill.git
+   git clone https://github.com/olganorgaard/breastmilk-jewerly-app.git
 2. Navigate to the project folder:
    ```bash
-   cd split-bill
+   cd breastmilk-jewerly-app
 3. Open <b><i>index.html</i></b> in your browser or serve with a local dev server.
 
 <br><h2> 🛠 Technologies used: </h2>
 <ul>
-  <li>HTML5 / CSS</li>
-  <li>JavaScript (ES6+)</li>
+  <li>HTML5</li>
+  <li>CSS</li>
   <li>GSAP</li>
 </ul>
 
