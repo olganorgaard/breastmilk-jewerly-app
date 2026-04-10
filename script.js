@@ -1,126 +1,279 @@
-gsap.from(".nav", {delay:1, duration:2, y:50, opacity:0})
-gsap.from(".description", {delay:1, duration:2, y:-50, opacity:0})
-gsap.from(".product", {delay:0.4, duration:2, y:-20, opacity:0, stagger: 0.3})
-gsap.to(".main", {delay:0.4, duration:3, opacity:1})
+// script.js
 
-const titles = document.querySelectorAll(".header_h2");
-// Scale Titles when focus on it
-titles.forEach(function(item){
-    item.addEventListener('mouseover', () => {
-    gsap.to(item, {scale:1.2})
-    })
-})
+// Animations (safe)
+gsap.from(".nav", { delay: 1, duration: 2, y: 50, opacity: 0 });
+gsap.from(".item_description", { delay: 1, duration: 2, y: -50, opacity: 0 });
+gsap.from(".product", { delay: 0.4, duration: 2, y: -20, opacity: 0, stagger: 0.3 });
 
-// burger menu
-
-let burgerMenu = document.querySelector("#burger-menu");
-let overlay = document.querySelector("#menu");
-
-burgerMenu?.addEventListener('click', () => {
-  this.classList.toggle("close");
-  overlay.classList.toggle("overlay");
+// Change text (safe)
+gsap.registerPlugin(TextPlugin);
+gsap.to(".main", {
+  duration: 3,
+  delay: 3,
+  text: { type: "diff", value: "New collection for you!" },
 });
 
-// Change text
-gsap.registerPlugin(TextPlugin)
-gsap.to(".main", {
-    duration: 3,
-    delay:3,
-    text:{ 
-        type: "diff",
-        value: "New collection for you!"
-        }
+// ---------------- POPUP (Flip) ----------------
+const allItems = gsap.utils.toArray(".gallery__item"); // all cards
+const details = document.querySelector(".detail");
+const detailContent = document.querySelector(".detail .content");
+const detailMainImage = document.querySelector(".detail__main-img");
+const thumbsContainer = document.querySelector(".detail__thumbs");
+const detailTitle = document.querySelector(".detail .title");
+const detailSecondary = document.querySelector(".detail .secondary");
+const detailDescription = document.querySelector(".detail .description");
+const detailMetaLine = document.querySelector("#detailMetaLine");
+const prevBtn = document.querySelector(".detail__prev");
+const nextBtn = document.querySelector(".detail__next");
+const closeBtn = document.querySelector(".detail__close");
+const orderBtn = document.querySelector(".detail__order");
+
+let activeItem = null;
+let activeVisibleIndex = -1;
+
+gsap.set(detailContent, { yPercent: -100 });
+
+// helper: which items are currently visible (not hidden by filter)
+function getVisibleItems() {
+  return allItems.filter((el) => !el.classList.contains("is-hidden"));
+}
+
+// helper: parse images list from dataset
+function getItemImages(item) {
+  const raw = (item.dataset.images || "").trim();
+  if (!raw) {
+    const src = item.querySelector("img")?.getAttribute("src");
+    return src ? [src] : [];
+  }
+  return raw.split("|").map(s => s.trim()).filter(Boolean);
+}
+
+function buildThumbs(images, activeSrc) {
+  thumbsContainer.innerHTML = "";
+  if (images.length <= 1) return;
+
+  images.forEach((src) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "";
+    img.loading = "lazy";
+    img.decoding = "async";
+
+    img.className = "detail__thumb" + (src === activeSrc ? " is-active" : "");
+    img.addEventListener("click", (e) => {
+      e.stopPropagation();
+      setMainImage(src);
+      thumbsContainer.querySelectorAll(".detail__thumb").forEach(t => t.classList.remove("is-active"));
+      img.classList.add("is-active");
+    });
+    thumbsContainer.appendChild(img);
   });
+}
 
-// Product container
-const items = gsap.utils.toArray(".item"),
-      details = document.querySelector('.detail'),
-      detailContent = document.querySelector('.content'),
-      detailImage = document.querySelector('.detail img'),
-      detailTitle = document.querySelector('.detail .title'),
-      detailSecondary = document.querySelector('.detail .secondary'),
-      detailDescription = document.querySelector('.detail .description');
+function setMainImage(src) {
+  detailMainImage.src = src;
+}
 
-let activeItem; // keeps track of which item is open (details)
-gsap.set(detailContent, { yPercent: -100 }); // close the details "drawer" (content) initially
+function updatePopupContent(item) {
+  const data = item.dataset;
+
+  detailTitle.innerText = data.title || "";
+  detailSecondary.innerText = data.secondary || "";
+
+  const price = data.price || "";
+  const material = data.material || "";
+  const weight = data.weight || "";
+  const meta = [price, material, weight].filter(Boolean).join(" • ");
+  detailMetaLine.textContent = meta;
+
+  detailDescription.innerText = data.text || "";
+
+  const images = getItemImages(item);
+  const first = images[0] || item.querySelector("img")?.src || "";
+  setMainImage(first);
+  buildThumbs(images, first);
+}
 
 function showDetails(item) {
-  if (activeItem) { // someone could click on an element behind the open details panel in which case we should just close it.
-    return hideDetails();
-  }
-  let onLoad = () => {
+  if (activeItem) return hideDetails();
 
-    // position the details on top of the item (scaled down)
-    Flip.fit(details, item, {scale: true, fitChild: detailImage});
+  const visible = getVisibleItems();
+  activeVisibleIndex = visible.indexOf(item);
 
-    // record the state
+  const onLoad = () => {
+    Flip.fit(details, item, { scale: true, fitChild: detailMainImage });
+
     const state = Flip.getState(details);
 
-    // set the final state
-    gsap.set(details, {clearProps: true}); // wipe out all inline stuff so it's in the native state (not scaled)
-    gsap.set(details, {xPercent: -50, top: "50%", yPercent: -50, visibility: "visible", overflow: "hidden"});
+    gsap.set(details, { clearProps: true });
+    gsap.set(details, {
+      xPercent: -50,
+      top: "50%",
+      yPercent: -50,
+      visibility: "visible",
+      overflow: "hidden",
+    });
 
     Flip.from(state, {
       duration: 0.5,
       ease: "power2.inOut",
       scale: true,
-      onComplete: () => gsap.set(details, {overflow: "auto"}) // to permit scrolling if necessary
-    })
-      // Flip.from() returns a timeline, so add a tween to reveal the detail content. That way, if the flip gets interrupted and forced to completion & killed, this does too.
-      .to(detailContent, {yPercent: 0}, 0.2);
+      onComplete: () => gsap.set(details, { overflow: "auto" }),
+    }).to(detailContent, { yPercent: 0 }, 0.2);
 
-    detailImage.removeEventListener("load", onLoad);
-    document.addEventListener('click', hideDetails);
+    detailMainImage.removeEventListener("load", onLoad);
+    document.addEventListener("click", hideDetails);
   };
 
-  // Change image and text
-  const data = item.dataset;
-  detailImage.addEventListener("load", onLoad);
-  detailImage.src = item.querySelector('img').src;
-  detailTitle.innerText = data.title;
-  detailSecondary.innerText = data.secondary;
-  detailDescription.innerText = data.text;
+  updatePopupContent(item);
+  detailMainImage.addEventListener("load", onLoad);
 
-  // stagger-fade the items out from the one that was selected in a staggered way (and kill the tween of the selected item)
-  gsap.to(items, {opacity: 0.3, stagger: { amount: 0.7, from: items.indexOf(item), grid: "auto"}}).kill(item);
-  gsap.to(".app", {backgroundColor: "#888", duration: 1, delay: 0.3}); // fade out the background
+  gsap.to(allItems, {
+    opacity: 0.3,
+    stagger: { amount: 0.7, from: allItems.indexOf(item), grid: "auto" },
+  }).kill(item);
+
+  gsap.to(".app", { backgroundColor: "#888", duration: 1, delay: 0.3 });
+
+  details?.setAttribute("aria-hidden", "false");
   activeItem = item;
 }
 
 function hideDetails() {
-  document.removeEventListener('click', hideDetails);
-  gsap.set(details, {overflow: "hidden"});
+  if (!activeItem) return;
 
-  // record the current state of details
+  document.removeEventListener("click", hideDetails);
+  gsap.set(details, { overflow: "hidden" });
+
   const state = Flip.getState(details);
 
-  // scale details down so that its detailImage fits exactly on top of activeItem
-  Flip.fit(details, activeItem, {scale: true, fitChild: detailImage});
+  Flip.fit(details, activeItem, { scale: true, fitChild: detailMainImage });
 
-  // animate the other elements, like all fade all items back up to full opacity, slide the detailContent away, and tween the background color to white.
   const tl = gsap.timeline();
-  tl.set(details, {overflow: "hidden"})
-    .to(detailContent, {yPercent: -100})
-    .to(items, {opacity: 1, stagger: {amount: 0.7, from: items.indexOf(activeItem), grid: "auto"}})
-    .to(".app", {backgroundColor: "#feffef"}, "<");
+  tl.set(details, { overflow: "hidden" })
+    .to(detailContent, { yPercent: -100 })
+    .to(allItems, {
+      opacity: 1,
+      stagger: { amount: 0.7, from: allItems.indexOf(activeItem), grid: "auto" },
+    })
+    .to(".app", { backgroundColor: "#feffef" }, "<");
 
-  // animate from the original state to the current one.
   Flip.from(state, {
     scale: true,
     duration: 0.5,
-    delay: 0.2, // 0.2 seconds because we want the details to slide up first, then flip.
-    onInterrupt: () => tl.kill()
-  })
-    .set(details, {visibility: "hidden"});
+    delay: 0.2,
+    onInterrupt: () => tl.kill(),
+  }).set(details, { visibility: "hidden" });
 
+  details?.setAttribute("aria-hidden", "true");
   activeItem = null;
+  activeVisibleIndex = -1;
 }
 
-// Add click listeners
-gsap.utils.toArray('.item').forEach(item => item.addEventListener('click', () => showDetails(item)));
+// Click listeners for popup
+allItems.forEach((item) => item.addEventListener("click", () => showDetails(item)));
+
+// prevent closing when clicking inside popup
+details?.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+
+// Close by X
+closeBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+  hideDetails();
+});
+
+// Close by ESC
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") hideDetails();
+});
+
+// Next/Prev within visible items
+function goToRelative(delta) {
+  const visible = getVisibleItems();
+  if (!activeItem || visible.length === 0) return;
+
+  let idx = activeVisibleIndex;
+  if (idx === -1) idx = visible.indexOf(activeItem);
+  if (idx === -1) return;
+
+  idx = (idx + delta + visible.length) % visible.length;
+  activeVisibleIndex = idx;
+
+  const nextItem = visible[idx];
+  activeItem = nextItem;
+  updatePopupContent(nextItem);
+}
+
+prevBtn?.addEventListener("click", (e) => { e.stopPropagation(); goToRelative(-1); });
+nextBtn?.addEventListener("click", (e) => { e.stopPropagation(); goToRelative(1); });
+
+// Order button: close popup + scroll down
+orderBtn?.addEventListener("click", (e) => {
+  e.stopPropagation();
+
+  const href = orderBtn.getAttribute("href") || "#contact_us";
+  if (href.startsWith("#")) {
+    e.preventDefault();
+    hideDetails();
+
+    setTimeout(() => {
+      const target = document.querySelector(href);
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", href);
+      }
+    }, 250);
+  } else {
+    hideDetails();
+  }
+});
 
 // Intro animation
-window.addEventListener('load', () => {
-  gsap.to('.app', { autoAlpha: 1, duration: 0.2 });
-  gsap.from('.item', {autoAlpha: 0, yPercent: 30, stagger: 0.04});
+window.addEventListener("load", () => {
+  gsap.to(".app", { autoAlpha: 1, duration: 0.2 });
+  gsap.from(".gallery__item", { autoAlpha: 0, duration: 0.35, stagger: 0.04 }); 
+});
+
+
+// ---------------- FILTERS ----------------
+const filterButtons = document.querySelectorAll(".filter-btn");
+
+function setActiveFilterButton(activeBtn) {
+  filterButtons.forEach((btn) => btn.classList.remove("filter-btn--active"));
+  activeBtn.classList.add("filter-btn--active");
+}
+
+function applyFilter(filterValue) {
+  if (activeItem) hideDetails();
+
+  allItems.forEach((card) => {
+    const category = (card.dataset.category || "").toLowerCase();
+    const shouldShow = filterValue === "all" || category === filterValue;
+    card.classList.toggle("is-hidden", !shouldShow);
+  });
+}
+
+filterButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const filterValue = btn.dataset.filter;
+    setActiveFilterButton(btn);
+    applyFilter(filterValue);
+  });
+});
+
+// ---------------- FAQ (FIX) ----------------
+const faqButtons = document.querySelectorAll(".faq__question");
+
+faqButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const item = btn.closest(".faq__item");
+    const answer = item?.querySelector(".faq__answer");
+    if (!item || !answer) return;
+
+    const isOpen = item.classList.toggle("is-open");
+    btn.setAttribute("aria-expanded", String(isOpen));
+    answer.hidden = !isOpen;
+  });
 });
