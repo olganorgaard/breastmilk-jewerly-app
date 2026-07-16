@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,463 +6,89 @@
   <link rel="stylesheet" href="style.css" />
   <title>Keepsake Jewelry</title>
 </head>
-
 <body>
   <header class="container">
     <div class="main-tool-bar">
-      <nav class="nav">
-        <a class="nav__link" href="#our_collection">Our Collection</a>
-        <a class="nav__link" href="#how_works">How it's work</a>
-        <a class="nav__link" href="#shop">Shop</a>
-        <a class="nav__link" href="#policies">Policies</a>
-        <a class="nav__link" href="#faq">FAQ</a>
-        <a class="nav__link" href="#reviews">Reviews</a>
-        <a class="nav__link" href="#contact_us">Contact Us</a>
-      </nav>
+      <div class="nav-shell">
+        <a class="brand-mark" href="index.html">Keepsake Jewelry</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav" id="site-nav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="shop.html">Shop</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+        </nav>
+      </div>
     </div>
 
     <div class="capture">
-      <h1>Keepsake Jewelry</h1>
+      <div class="hero-badge">Handmade with love • Personalized Keepsakes</div>
+      <h1>Keep your memories close</h1>
       <p class="item_description">
-        We are the creators of Precious Inclusions Keepsake Jewelry, and we are glad you have taken the time to check out our shop.
-        We specialize in breast milk jewelry which we create with passion and love. Whether inclusions you choose to make a keepsake with,
-        we promise to treat your materials with dignity and respect. We use the best quality of resin to make every piece beautiful and durable.
-        All you need to do is to mail us the item that you wish us to include in any personalized form. Custom orders is what we specialize in!
-        Now, let's create something special for you!
+        Turn precious moments into jewelry that feels personal, elegant, and meaningful.
+        Our custom keepsake designs preserve your story in a wearable heirloom.
       </p>
-
       <div class="hero-cta">
-        <a class="hero-btn hero-btn--primary" href="#shop">Shop now</a>
-        <a class="hero-btn hero-btn--secondary" href="#how_works">How it works</a>
+        <a class="hero-btn hero-btn--primary" href="shop.html">Browse the shop</a>
+        <a class="hero-btn hero-btn--secondary" href="about.html">How it works</a>
       </div>
     </div>
   </header>
 
   <main>
-    <section id="our_collection">
+    <section class="section section--accent">
       <div class="header">
-        <h2 class="header_h2 main">Our Collection</h2>
+        <h2 class="header_h2">Explore the collection</h2>
       </div>
-
-      <section class="wrapper">
-        <section class="product">
-          <img class="product-img one" src="img/necklace_1.jpg" alt="Necklace" width="450px" />
-          <h3 class="item_name">Breastmilk Necklaces</h3>
-          <p class="item_text">Made with your own breast milk.</p>
-          <button class="btn"><a href="#necklace">View Collection</a></button>
-        </section>
-
-        <section class="product">
-          <img class="product-img" src="img/ring_1.jpg" alt="Ring" width="450px" />
-          <h3 class="item_name">Breastmilk Ring</h3>
-          <p class="item_text">Made with your own breast milk.</p>
-          <button class="btn"><a href="#ring">View Collection</a></button>
-        </section>
-
-        <section class="product">
-          <img class="product-img" src="img/earring_1.jpg" alt="Earring" width="450px" />
-          <h3 class="item_name">Breastmilk Earrings</h3>
-          <p class="item_text">Made with your own breast milk.</p>
-          <button class="btn"><a href="#earring">View Collection</a></button>
-        </section>
-      </section>
-
-      <section id="how_works">
-        <div class="header">
-          <h2 class="header_h2" id="learn">Learn How its work</h2>
-        </div>
-
-        <section class="wrapper_2">
-          <div class="why-block">
-            <span>1</span>
-            <div>
-              <h3>Choose our design</h3>
-              <p>
-                All you need to do is choose just the right piece—one that reflects your personal style and the bond that you share with your baby—and we’ll take care of the rest.
-              </p>
-            </div>
-          </div>
-
-          <div class="why-block">
-            <span>2</span>
-            <div>
-              <h3>Return your breastmilk kit</h3>
-              <p>
-                When you place your order, we will send you a breastmilk kit containing a labeled, leakproof storage bag, a set of instructions, and a padded, prepaid return envelope so that shipping is free.
-              </p>
-            </div>
-          </div>
-
-          <div class="why-block">
-            <span>3</span>
-            <div>
-              <h3>Treasure your breastmilk jewelry</h3>
-              <p>
-                In 5 to 8 weeks (but up to 12 weeks for rings), your beautiful jewelry will be at your doorstep. Cherish your beautiful keepsake jewelry and wear it—with love, with pride, and with joy.
-              </p>
-            </div>
-          </div>
-        </section>
-      </section>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Shop our jewelry</h3>
+          <p>View necklaces, rings, and earrings crafted from your own breast milk or keepsake material.</p>
+          <a class="hero-btn hero-btn--secondary" href="shop.html">Visit shop</a>
+        </article>
+        <article class="feature-card">
+          <h3>Learn the process</h3>
+          <p>Understand our gentle preparation, safe shipping, and thoughtful custom creation steps.</p>
+          <a class="hero-btn hero-btn--secondary" href="about.html">Learn more</a>
+        </article>
+        <article class="feature-card">
+          <h3>Need support?</h3>
+          <p>Contact us for questions about orders, materials, shipping, or custom design ideas.</p>
+          <a class="hero-btn hero-btn--secondary" href="contact.html">Contact us</a>
+        </article>
+      </div>
     </section>
 
-    <section class="video">
-      <video autoplay muted loop id="myBakery" playsinline width="70%">
-        <source src="img/video.mp4" type="video/mp4" />
-      </video>
-    </section>
-
-    <br /><br />
-
-    <div class="header" id="shop">
-      <h2 class="header_h2">Shop</h2>
-    </div>
-
-    <div class="shop-filters" aria-label="Shop filters">
-      <button class="filter-btn filter-btn--active" type="button" data-filter="all">All</button>
-      <button class="filter-btn" type="button" data-filter="necklace">Necklace</button>
-      <button class="filter-btn" type="button" data-filter="ring">Ring</button>
-      <button class="filter-btn" type="button" data-filter="earring">Earrings</button>
-    </div>
-
-    <br />
-
-    <div class="app" id="necklace">
-      <div class="gallery">
-
-        <!-- NECKLACES -->
-        <div class="gallery__item" data-category="necklace"
-             data-title="Breast Milk Drop Necklace with Umbilical Stump and Opal Flakes"
-             data-secondary="70$ (Silver/Gold)"
-             data-text="Meet The Original. Its timeless design captures the pure beauty of your breastfeeding experience. A simple gold-plated chain and loop bail ensure your 25-mm teardrop breastmilk pendant shines above all else. Gold flakes, added by hand, give your stone a look that’s as unique as the bond you share with your baby."
-             data-price="70$" data-material="Silver/Gold" data-weight="25mm"
-             data-images="img/necklace_1.jpg|img/necklace_2.jpg|img/necklace_3.jpg">
-          <img class="gallery__img" src="img/necklace_1.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Necklace with Umbilical Stump</h3>
-          <div class="card-meta">70$ • Silver/Gold • 25mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
+    <section class="cta-banner">
+      <div class="cta-banner__content">
+        <div>
+          <h3>Create something beautiful</h3>
+          <p>Choose the right keepsake jewelry design and let us preserve your most meaningful materials with care.</p>
         </div>
-
-        <div class="gallery__item" data-category="necklace"
-             data-title="Breast Milk Drop Pendant with Silver Flakes and Chain"
-             data-secondary="70$ (Silver)"
-             data-text="Meet The Original Silver. Its timeless design captures the pure beauty of your breastfeeding experience. A simple sterling silver chain and silver loop bail ensure your 25-mm teardrop breastmilk pendant shines above all else."
-             data-price="70$" data-material="Silver" data-weight="25mm"
-             data-images="img/necklace_2.jpg|img/necklace_1.jpg">
-          <img class="gallery__img" src="img/necklace_2.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Pendant with Silver Flakes</h3>
-          <div class="card-meta">70$ • Silver • 25mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <div class="gallery__item" data-category="necklace"
-             data-title="Breast Milk Pearlized Pendant with Chain"
-             data-secondary="65$ (Gold)"
-             data-text="If you adore sparkle and florals, you’ll love sporting our Sweet Pea pearl pendant necklace. A perfect reminder of your sweet little one."
-             data-price="65$" data-material="Gold" data-weight="20mm"
-             data-images="img/necklace_3.jpg|img/necklace_1.jpg">
-          <img class="gallery__img" src="img/necklace_3.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Pearlized Pendant</h3>
-          <div class="card-meta">65$ • Gold • 20mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <!-- RINGS -->
-        <div id="ring" class="gallery__item" data-category="ring"
-             data-title="Placenta, Umbilical or Breast Milk Rings"
-             data-secondary="65$ (Gold)"
-             data-text="Timeless, precious, and divine. A simple band and setting ensure your stone takes center stage."
-             data-price="65$" data-material="Gold" data-weight="6.5mm"
-             data-images="img/ring_1.jpg|img/ring_2.jpg|img/ring_3.jpg">
-          <img class="gallery__img" src="img/ring_1.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Breastmilk Rings</h3>
-          <div class="card-meta">65$ • Gold • 6.5mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <div class="gallery__item" data-category="ring"
-             data-title="Antique Oval Crown Breast Milk Ring"
-             data-secondary="55$ (Gold)"
-             data-text="A classic crown setting and a one-of-a-kind stone made from your keepsake material."
-             data-price="55$" data-material="Gold" data-weight="7×5mm"
-             data-images="img/ring_2.jpg|img/ring_1.jpg">
-          <img class="gallery__img" src="img/ring_2.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Crown Breastmilk Ring</h3>
-          <div class="card-meta">55$ • Gold • 7×5mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <div class="gallery__item" data-category="ring"
-             data-title="Breast Milk Circle Ring with Shell Flower"
-             data-secondary="65$ (Silver/Gold)"
-             data-text="Elegant and meaningful. A beautiful way to keep your memories close."
-             data-price="65$" data-material="Silver/Gold" data-weight="10mm"
-             data-images="img/ring_3.jpg|img/ring_2.jpg">
-          <img class="gallery__img" src="img/ring_3.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Circle Ring</h3>
-          <div class="card-meta">65$ • Silver/Gold • 10mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <!-- EARRINGS -->
-        <div id="earring" class="gallery__item" data-category="earring"
-             data-title="Breast Milk Drop Earrings with Gold Flakes"
-             data-secondary="65$ (Silver)"
-             data-text="Simple yet full of character. A lightweight pair designed for everyday wear."
-             data-price="65$" data-material="Silver" data-weight="20mm"
-             data-images="img/earring_1.jpg|img/earring_3.jpg">
-          <img class="gallery__img" src="img/earring_1.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Earrings with Gold Flakes</h3>
-          <div class="card-meta">65$ • Silver • 20mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <div class="gallery__item" data-category="earring"
-             data-title="Breast Milk Stud Earrings"
-             data-secondary="65$ (Silver)"
-             data-text="Minimalist studs that highlight the natural beauty of your stone."
-             data-price="65$" data-material="Silver" data-weight="6mm"
-             data-images="img/earring_3.jpg|img/earring_1.jpg">
-          <img class="gallery__img" src="img/earring_3.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Stud Earrings</h3>
-          <div class="card-meta">65$ • Silver • 6mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-        <div class="gallery__item" data-category="earring"
-             data-title="2 Sets of Breast Milk Stud Earrings"
-             data-secondary="65$ (Silver)"
-             data-text="A matching set for you and a loved one. Elegant and timeless."
-             data-price="65$" data-material="Silver" data-weight="6mm"
-             data-images="img/earring_1.jpg|img/earring_2.jpg">
-          <img class="gallery__img" src="img/earring_1.jpg" alt="" loading="lazy" />
-          <h3 class="item_name">Stud Earrings</h3>
-          <div class="card-meta">65$ • Silver • 6mm</div>
-          <button class="btn"><a href="#necklace">View Product</a></button>
-        </div>
-
-      </div>
-    </div>
-
-    <section id="policies" class="section">
-      <div class="header">
-        <h2 class="header_h2">Policies</h2>
-      </div>
-
-      <div class="policies">
-        <div class="policy-card" id="shipping">
-          <h3 class="policy-title">Shipping</h3>
-          <p class="policy-text">
-            After we receive your materials, production typically takes 5–8 weeks (rings up to 12).
-            We ship with tracking when available.
-          </p>
-          <a class="policy-link" href="#contact_us">Questions? Contact us →</a>
-        </div>
-
-        <div class="policy-card" id="returns">
-          <h3 class="policy-title">Returns</h3>
-          <p class="policy-text">
-            Custom keepsakes are made-to-order, so returns are limited. If there’s an issue with your order,
-            please reach out and we’ll make it right.
-          </p>
-          <a class="policy-link" href="mailto:kozlova.olga10011987@gmail.com?subject=Returns%20Policy%20Question">Email about returns →</a>
+        <div class="hero-cta">
+          <a class="hero-btn hero-btn--primary" href="shop.html">Start shopping</a>
+          <a class="hero-btn hero-btn--secondary" href="contact.html">Ask a question</a>
         </div>
       </div>
     </section>
 
-    <!-- POPUP -->
-    <div class="detail" aria-hidden="true" role="dialog" aria-label="Product details">
-      <div class="detail__top">
-        <button class="detail__nav detail__prev" type="button" aria-label="Previous product">‹</button>
-        <button class="detail__close" type="button" aria-label="Close popup" title="Close">✕</button>
-        <button class="detail__nav detail__next" type="button" aria-label="Next product">›</button>
-      </div>
-
-      <img class="detail__main-img" alt="" />
-
-      <div class="detail__thumbs" aria-label="Product images"></div>
-
-      <div class="content">
-        <div class="title">Placeholder title</div>
-        <div class="secondary">Placeholder secondary</div>
-        <div class="description">Lorem ipsum dolor sit amet.</div>
-
-        <div class="detail__meta-line" id="detailMetaLine"></div>
-
-        <div class="detail__actions">
-          <a class="detail__order btn" href="#order_form">Order / Contact to order</a>
-
-          <a class="detail__mailto btn btn--ghost"
-             href="mailto:kozlova.olga10011987@gmail.com?subject=Order%20Keepsake%20Jewelry">
-            Email to order
-          </a>
+    <footer class="footer-home">
+      <div class="footer-home__content">
+        <div>
+          <h2 class="footer-home__title">Keepsake Jewelry</h2>
+          <p>Handmade keepsakes created from your most meaningful materials. Visit the shop, learn our process, or contact us to begin your order.</p>
+        </div>
+        <div class="footer-home__links">
+          <a class="item_footer" href="index.html">Home</a>
+          <a class="item_footer" href="shop.html">Shop</a>
+          <a class="item_footer" href="about.html">About</a>
+          <a class="item_footer" href="contact.html">Contact</a>
         </div>
       </div>
-    </div>
-
-    <!-- REVIEWS -->
-    <section id="reviews" class="section">
-      <div class="header">
-        <h2 class="header_h2">Reviews</h2>
-      </div>
-
-      <div class="reviews">
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">“Absolutely beautiful! The quality is amazing and the whole process was so clear and easy.”</p>
-          <div class="review-author">— Emily R.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">“I cried when I opened the package. Such a meaningful keepsake — thank you for your care!”</p>
-          <div class="review-author">— Sarah L.</div>
-        </div>
-
-        <div class="review-card">
-          <div class="review-stars">★★★★★</div>
-          <p class="review-text">“Fast communication and stunning result. The stone looks even better in real life.”</p>
-          <div class="review-author">— Hannah K.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section">
-      <div class="header">
-        <h2 class="header_h2">FAQ</h2>
-      </div>
-
-      <div class="faq" role="region" aria-label="Frequently asked questions">
-        <div class="faq__item">
-          <button class="faq__question" type="button" aria-expanded="false">
-            How much breastmilk do I need to send?
-            <span class="faq__icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq__answer" hidden>
-            Usually 10–15 ml is enough for most jewelry pieces. We’ll confirm requirements with your order and design.
-          </div>
-        </div>
-
-        <div class="faq__item">
-          <button class="faq__question" type="button" aria-expanded="false">
-            How do I ship my materials safely?
-            <span class="faq__icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq__answer" hidden>
-            Use a leakproof bag/container, label it, and place it in a padded envelope. Keep it cool if possible. We can also provide instructions after you place an order.
-          </div>
-        </div>
-
-        <div class="faq__item">
-          <button class="faq__question" type="button" aria-expanded="false">
-            How long does it take to make my jewelry?
-            <span class="faq__icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq__answer" hidden>
-            Typical turnaround is 5–8 weeks. Rings can take up to 12 weeks depending on design complexity.
-          </div>
-        </div>
-
-        <div class="faq__item">
-          <button class="faq__question" type="button" aria-expanded="false">
-            Can I order a custom design?
-            <span class="faq__icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq__answer" hidden>
-            Yes! Custom orders are our specialty. Send us a message with your idea and we’ll recommend the best options.
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer id="contact_us">
-      <div class="header">
-        <h2 class="header_h2 contact">Contact Us</h2>
-      </div>
-
-      <section class="footer_sections">
-        <section class="footer_one">
-          <ul>
-            <li><a class="item_footer" href="#">Privacy Policy</a></li>
-            <li><a class="item_footer" href="#faq">FAQ</a></li>
-            <li><a class="item_footer" href="#policies">Policies</a></li>
-            <li><a class="item_footer" href="#shipping">Shipping</a></li>
-            <li><a class="item_footer" href="#returns">Returns</a></li>
-          </ul>
-        </section>
-
-        <section class="footer_two">
-          <ul>
-            <li><a class="item_footer" href="tel:+123456789">Tel: 123456789</a></li>
-            <li><a class="item_footer" href="mailto: kozlova.olga10011987@gmail.com">Email</a></li>
-            <li><a class="item_footer" href="#shop">Our Shop</a></li>
-            <li><a class="item_footer" href="#our_collection">Our Collection</a></li>
-          </ul>
-        </section>
-
-        <section>
-          <div class="map">
-            <div class="mapouter">
-              <div class="gmap_canvas">
-                <iframe width="507" height="357" id="gmap_canvas"
-                        src="https://maps.google.com/maps?q=Marine+way%2C+Sechelt&t=&z=13&ie=UTF8&iwloc=&output=embed"
-                        frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
-                <style>
-                  .mapouter { position: relative; text-align: right; height: 357px; width: 507px; }
-                  .gmap_canvas { overflow: hidden; background: none !important; height: 357px; width: 507px; }
-                </style>
-              </div>
-            </div>
-          </div>
-        </section>
-      </section>
-
-      <section id="order_form" class="section">
-        <div class="header">
-          <h2 class="header_h2">Order / Contact Form</h2>
-        </div>
-
-        <form class="order-form"
-              name="order-form"
-              method="POST"
-              data-netlify="true"
-              netlify-honeypot="bot-field">
-
-          <input type="hidden" name="form-name" value="order-form" />
-          <p hidden>
-            <label>Don’t fill this out: <input name="bot-field" /></label>
-          </p>
-
-          <div class="form-row">
-            <input type="text" name="name" placeholder="Your name" required />
-            <input type="email" name="email" placeholder="Your email" required />
-          </div>
-
-          <div class="form-row">
-            <select name="product">
-              <option value="">Select product</option>
-              <option>Necklace</option>
-              <option>Ring</option>
-              <option>Earrings</option>
-              <option>Custom design</option>
-            </select>
-
-            <input type="text" name="city" placeholder="Your city / country" />
-          </div>
-
-          <textarea name="message" rows="5"
-            placeholder="Tell us what you want (stone type, design idea, size, etc.)"></textarea>
-
-          <button class="btn form-btn" type="submit">
-            Send order request
-          </button>
-
-          <p class="form-note">
-            We’ll reply within 24 hours ❤️
-          </p>
-        </form>
-      </section>
     </footer>
   </main>
 

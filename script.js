@@ -1,5 +1,22 @@
 // script.js
 
+const navToggle = document.querySelector(".nav-toggle");
+const siteNav = document.getElementById("site-nav");
+
+if (navToggle && siteNav) {
+  navToggle.addEventListener("click", () => {
+    const isOpen = siteNav.classList.toggle("nav--open");
+    navToggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!siteNav.contains(event.target) && !navToggle.contains(event.target)) {
+      siteNav.classList.remove("nav--open");
+      navToggle.setAttribute("aria-expanded", "false");
+    }
+  });
+}
+
 // Animations (safe)
 gsap.from(".nav", { delay: 1, duration: 2, y: 50, opacity: 0 });
 gsap.from(".item_description", { delay: 1, duration: 2, y: -50, opacity: 0 });
@@ -31,7 +48,10 @@ const orderBtn = document.querySelector(".detail__order");
 let activeItem = null;
 let activeVisibleIndex = -1;
 
-gsap.set(detailContent, { yPercent: -100 });
+const hasPopup = Boolean(details && detailContent && detailMainImage && thumbsContainer && detailTitle && detailSecondary && detailDescription && detailMetaLine);
+if (hasPopup) {
+  gsap.set(detailContent, { yPercent: -100 });
+}
 
 // helper: which items are currently visible (not hidden by filter)
 function getVisibleItems() {

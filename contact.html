@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <title>Contact | Keepsake Jewelry</title>
+</head>
+<body>
+  <header class="container">
+    <div class="main-tool-bar">
+      <div class="nav-shell">
+        <a class="brand-mark" href="index.html">Keepsake Jewelry</a>
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <nav class="nav" id="site-nav">
+          <a class="nav__link" href="index.html">Home</a>
+          <a class="nav__link" href="shop.html">Shop</a>
+          <a class="nav__link" href="about.html">About</a>
+          <a class="nav__link" href="contact.html">Contact</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="capture">
+      <div class="hero-badge">Contact us</div>
+      <h1>Order help and questions</h1>
+      <p class="item_description">
+        Have a custom request? Need help with materials, shipping, or design options? Send us a message and we’ll reply quickly.
+      </p>
+      <div class="hero-cta">
+        <a class="hero-btn hero-btn--primary" href="#order_form">Send a message</a>
+        <a class="hero-btn hero-btn--secondary" href="shop.html">Browse the shop</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="header">
+        <h2 class="header_h2">Contact us</h2>
+      </div>
+      <div class="policy-card" style="margin: 0 auto; max-width: 900px;">
+        <p>We are here to help with order guidance, shipping details, and custom design questions. Please use the form below or send an email directly.</p>
+        <ul>
+          <li>Email: <a href="mailto:kozlova.olga10011987@gmail.com">kozlova.olga10011987@gmail.com</a></li>
+          <li>Phone: <a href="tel:+123456789">+1 234 567 89</a></li>
+          <li>Order support: custom keepsake jewelry, breast milk jewelry, rings, earrings, pendants</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="order_form" class="section">
+      <div class="header">
+        <h2 class="header_h2">Order / Contact Form</h2>
+      </div>
+      <form class="order-form"
+            name="order-form"
+            method="POST"
+            data-netlify="true"
+            netlify-honeypot="bot-field">
+
+        <input type="hidden" name="form-name" value="order-form" />
+        <p hidden>
+          <label>Don’t fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="form-row">
+          <input type="text" name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Your email" required />
+        </div>
+
+        <div class="form-row">
+          <select name="product">
+            <option value="">Select product</option>
+            <option>Necklace</option>
+            <option>Ring</option>
+            <option>Earrings</option>
+            <option>Custom design</option>
+          </select>
+
+          <input type="text" name="city" placeholder="Your city / country" />
+        </div>
+
+        <textarea name="message" rows="5" placeholder="Tell us what you want (stone type, design idea, size, etc.)"></textarea>
+
+        <button class="btn form-btn" type="submit">Send order request</button>
+        <p class="form-note">We’ll reply within 24 hours ❤️</p>
+      </form>
+    </section>
+
+    <section class="section section--accent">
+      <div class="header">
+        <h2 class="header_h2">Need help choosing?</h2>
+      </div>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <h3>Design advice</h3>
+          <p>We help you choose the right pendant or ring style for your piece.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Kit guidance</h3>
+          <p>We explain how to prepare and ship your materials safely.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Timelines</h3>
+          <p>We share production and delivery estimates so you can plan with confidence.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/TextPlugin.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/Flip.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
