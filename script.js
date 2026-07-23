@@ -35,20 +35,22 @@ const allItems = gsap.utils.toArray(".gallery__item"); // all cards
 const details = document.querySelector(".detail");
 const detailContent = document.querySelector(".detail .content");
 const detailMainImage = document.querySelector(".detail__main-img");
-const thumbsContainer = document.querySelector(".detail__thumbs");
 const detailTitle = document.querySelector(".detail .title");
 const detailSecondary = document.querySelector(".detail .secondary");
 const detailDescription = document.querySelector(".detail .description");
 const detailMetaLine = document.querySelector("#detailMetaLine");
-const prevBtn = document.querySelector(".detail__prev");
-const nextBtn = document.querySelector(".detail__next");
 const closeBtn = document.querySelector(".detail__close");
 const orderBtn = document.querySelector(".detail__order");
+const imagePrevBtn = document.querySelector(".detail__image-prev");
+const imageNextBtn = document.querySelector(".detail__image-next");
+const imageCount = document.querySelector(".detail__image-count");
 
 let activeItem = null;
 let activeVisibleIndex = -1;
+let activeImages = [];
+let activeImageIndex = 0;
 
-const hasPopup = Boolean(details && detailContent && detailMainImage && thumbsContainer && detailTitle && detailSecondary && detailDescription && detailMetaLine);
+const hasPopup = Boolean(details && detailContent && detailMainImage && detailTitle && detailSecondary && detailDescription && detailMetaLine);
 if (hasPopup) {
   gsap.set(detailContent, { yPercent: -100 });
 }
@@ -68,36 +70,27 @@ function getItemImages(item) {
   return raw.split("|").map(s => s.trim()).filter(Boolean);
 }
 
-function buildThumbs(images, activeSrc) {
-  thumbsContainer.innerHTML = "";
-  if (images.length <= 1) return;
-
-  images.forEach((src) => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = "";
-    img.loading = "lazy";
-    img.decoding = "async";
-
-    img.className = "detail__thumb" + (src === activeSrc ? " is-active" : "");
-    img.addEventListener("click", (e) => {
-      e.stopPropagation();
-      setMainImage(src);
-      thumbsContainer.querySelectorAll(".detail__thumb").forEach(t => t.classList.remove("is-active"));
-      img.classList.add("is-active");
-    });
-    thumbsContainer.appendChild(img);
-  });
+function toSentenceCase(value) {
+  const lower = value.trim().toLocaleLowerCase();
+  return lower.replace(/\p{L}/u, (letter) => letter.toLocaleUpperCase());
 }
 
-function setMainImage(src) {
-  detailMainImage.src = src;
+function setActiveImage(index) {
+  if (!activeImages.length) return;
+  activeImageIndex = (index + activeImages.length) % activeImages.length;
+  detailMainImage.src = activeImages[activeImageIndex];
+  detailMainImage.alt = `${detailTitle.textContent}, image ${activeImageIndex + 1} of ${activeImages.length}`;
+  imageCount.textContent = `${activeImageIndex + 1} / ${activeImages.length}`;
+  const hasMultipleImages = activeImages.length > 1;
+  imagePrevBtn.hidden = !hasMultipleImages;
+  imageNextBtn.hidden = !hasMultipleImages;
+  imageCount.hidden = !hasMultipleImages;
 }
 
 function updatePopupContent(item) {
   const data = item.dataset;
 
-  detailTitle.innerText = data.title || "";
+  detailTitle.innerText = toSentenceCase(data.title || "");
   detailSecondary.innerText = data.secondary || "";
 
   const price = data.price || "";
@@ -108,90 +101,77 @@ function updatePopupContent(item) {
 
   detailDescription.innerText = data.text || "";
 
-  const images = getItemImages(item);
-  const first = images[0] || item.querySelector("img")?.src || "";
-  setMainImage(first);
-  buildThumbs(images, first);
+  activeImages = getItemImages(item);
+  if (!activeImages.length && item.querySelector("img")?.src) activeImages = [item.querySelector("img").src];
+  setActiveImage(0);
 }
 
 function showDetails(item) {
-  if (activeItem) return hideDetails();
+  if (activeItem) return;
 
   const visible = getVisibleItems();
   activeVisibleIndex = visible.indexOf(item);
-
-  const onLoad = () => {
-    Flip.fit(details, item, { scale: true, fitChild: detailMainImage });
-
-    const state = Flip.getState(details);
-
-    gsap.set(details, { clearProps: true });
-    gsap.set(details, {
-      xPercent: -50,
-      top: "50%",
-      yPercent: -50,
-      visibility: "visible",
-      overflow: "hidden",
-    });
-
-    Flip.from(state, {
-      duration: 0.5,
-      ease: "power2.inOut",
-      scale: true,
-      onComplete: () => gsap.set(details, { overflow: "auto" }),
-    }).to(detailContent, { yPercent: 0 }, 0.2);
-
-    detailMainImage.removeEventListener("load", onLoad);
-    document.addEventListener("click", hideDetails);
-  };
-
+  const isMobilePopup = window.matchMedia("(max-width: 820px)").matches;
   updatePopupContent(item);
-  detailMainImage.addEventListener("load", onLoad);
+  activeItem = item;
+  details.setAttribute("aria-hidden", "false");
+  document.body.classList.add("popup-open");
+
+  gsap.killTweensOf([details, detailContent]);
+  gsap.set(detailContent, { yPercent: 0 });
+  gsap.set(details, {
+    clearProps: "width,height",
+    xPercent: -50,
+    top: isMobilePopup ? "calc(env(safe-area-inset-top, 0px) + 6px)" : "50%",
+    yPercent: isMobilePopup ? 0 : -50,
+    visibility: "visible",
+    overflowX: "hidden",
+    overflowY: "auto",
+  });
+  details.scrollTop = 0;
+  gsap.fromTo(details, { autoAlpha: 0, scale: 0.96 }, {
+    autoAlpha: 1,
+    scale: 1,
+    duration: 0.25,
+    ease: "power2.out",
+  });
 
   gsap.to(allItems, {
     opacity: 0.3,
-    stagger: { amount: 0.7, from: allItems.indexOf(item), grid: "auto" },
-  }).kill(item);
+    duration: 0.25,
+  });
 
-  gsap.to(".app", { backgroundColor: "#888", duration: 1, delay: 0.3 });
-
-  details?.setAttribute("aria-hidden", "false");
-  activeItem = item;
+  gsap.to(".app", { backgroundColor: "#888", duration: 0.25 });
+  setTimeout(() => document.addEventListener("click", hideDetails), 0);
 }
 
 function hideDetails() {
   if (!activeItem) return;
 
   document.removeEventListener("click", hideDetails);
-  gsap.set(details, { overflow: "hidden" });
-
-  const state = Flip.getState(details);
-
-  Flip.fit(details, activeItem, { scale: true, fitChild: detailMainImage });
-
-  const tl = gsap.timeline();
-  tl.set(details, { overflow: "hidden" })
-    .to(detailContent, { yPercent: -100 })
-    .to(allItems, {
-      opacity: 1,
-      stagger: { amount: 0.7, from: allItems.indexOf(activeItem), grid: "auto" },
-    })
-    .to(".app", { backgroundColor: "#feffef" }, "<");
-
-  Flip.from(state, {
-    scale: true,
-    duration: 0.5,
-    delay: 0.2,
-    onInterrupt: () => tl.kill(),
-  }).set(details, { visibility: "hidden" });
+  gsap.killTweensOf(details);
+  gsap.to(details, {
+    autoAlpha: 0,
+    scale: 0.97,
+    duration: 0.2,
+    ease: "power2.in",
+    onComplete: () => gsap.set(details, { visibility: "hidden" }),
+  });
+  gsap.to(allItems, { opacity: 1, duration: 0.25 });
+  gsap.to(".app", { backgroundColor: "#feffef", duration: 0.25 });
 
   details?.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("popup-open");
   activeItem = null;
   activeVisibleIndex = -1;
 }
 
 // Click listeners for popup
-allItems.forEach((item) => item.addEventListener("click", () => showDetails(item)));
+allItems.forEach((item) => item.addEventListener("click", (event) => {
+  event.preventDefault();
+  event.stopPropagation();
+  showDetails(item);
+}));
 
 // prevent closing when clicking inside popup
 details?.addEventListener("click", (e) => {
@@ -209,25 +189,8 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") hideDetails();
 });
 
-// Next/Prev within visible items
-function goToRelative(delta) {
-  const visible = getVisibleItems();
-  if (!activeItem || visible.length === 0) return;
-
-  let idx = activeVisibleIndex;
-  if (idx === -1) idx = visible.indexOf(activeItem);
-  if (idx === -1) return;
-
-  idx = (idx + delta + visible.length) % visible.length;
-  activeVisibleIndex = idx;
-
-  const nextItem = visible[idx];
-  activeItem = nextItem;
-  updatePopupContent(nextItem);
-}
-
-prevBtn?.addEventListener("click", (e) => { e.stopPropagation(); goToRelative(-1); });
-nextBtn?.addEventListener("click", (e) => { e.stopPropagation(); goToRelative(1); });
+imagePrevBtn?.addEventListener("click", (e) => { e.stopPropagation(); setActiveImage(activeImageIndex - 1); });
+imageNextBtn?.addEventListener("click", (e) => { e.stopPropagation(); setActiveImage(activeImageIndex + 1); });
 
 // Order button: close popup + scroll down
 orderBtn?.addEventListener("click", (e) => {

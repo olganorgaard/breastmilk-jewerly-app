@@ -188,16 +188,17 @@
       </div>
     </section>
 
-    <div class="detail" aria-hidden="true" role="dialog" aria-label="Product details">
+    <div class="detail" aria-hidden="true" aria-modal="true" role="dialog" aria-label="Product details">
       <div class="detail__top">
-        <button class="detail__nav detail__prev" type="button" aria-label="Previous product">‹</button>
         <button class="detail__close" type="button" aria-label="Close popup" title="Close">✕</button>
-        <button class="detail__nav detail__next" type="button" aria-label="Next product">›</button>
       </div>
 
-      <img class="detail__main-img" alt="" />
-
-      <div class="detail__thumbs" aria-label="Product images"></div>
+      <div class="detail__media">
+        <button class="detail__image-nav detail__image-prev" type="button" aria-label="Previous product image">‹</button>
+        <img class="detail__main-img" alt="" />
+        <button class="detail__image-nav detail__image-next" type="button" aria-label="Next product image">›</button>
+        <span class="detail__image-count" aria-live="polite"></span>
+      </div>
 
       <div class="content">
         <div class="title">Placeholder title</div>
